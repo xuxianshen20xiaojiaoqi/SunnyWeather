@@ -1,6 +1,7 @@
 package com.example.sunnyweather.ui.place
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,10 +33,9 @@ class PlaceFragment:Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        val bgImageView:ImageView?=activity?.findViewById(R.id.bgImageView)
         super.onActivityCreated(savedInstanceState)
+        val bgImageView:ImageView?=activity?.findViewById(R.id.bgImageView)
         val layoutManager= LinearLayoutManager(activity)
-
         val recyclerView=activity?.findViewById<RecyclerView>(R.id.recycleView)
         recyclerView?.layoutManager=layoutManager
         adapter= PlaceAdapter(this,viewModel.placeList)
@@ -48,29 +48,25 @@ class PlaceFragment:Fragment() {
                 viewModel.searchPlaces(content)
             }else{
                 recyclerView?.visibility=View.GONE
-
                 bgImageView?.visibility=View.VISIBLE
                 viewModel.placeList.clear()
                 adapter.notifyDataSetChanged()
             }
-
         }
-        viewModel.placeLiveData.observe(this as LifecycleOwner, Observer {
+
+        viewModel.placeLiveData.observe(this.viewLifecycleOwner, Observer {
             result->
-            val place=result.getOrNull()
-            if (place!=null){
+            val places=result.getOrNull()
+            if (places!=null){
                 recyclerView?.visibility=View.VISIBLE
                 bgImageView?.visibility=View.GONE
                 viewModel.placeList.clear()
-                viewModel.placeList.addAll(place)
+                viewModel.placeList.addAll(places)
                 adapter.notifyDataSetChanged()
             }else{
                 Toast.makeText(activity,"未能查询到相关数据",Toast.LENGTH_SHORT).show()
                 result.exceptionOrNull()?.printStackTrace()
             }
         })
-
-
-
     }
 }

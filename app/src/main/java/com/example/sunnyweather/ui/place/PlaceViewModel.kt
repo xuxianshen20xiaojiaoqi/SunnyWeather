@@ -1,6 +1,5 @@
 package com.example.sunnyweather.ui.place
 
-import android.app.DownloadManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sunnyweather.logic.model.Place

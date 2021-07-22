@@ -8,7 +8,7 @@ class SunnyWeatherApplication:Application() {
     @SuppressLint("StaticFieldLeak")
     companion object{
         lateinit var context: Context
-        const val TOKEN="https://dashboard.caiyunapp.com/v1/token/60f14a4ce5aa8300702bf119/?type=1"
+        const val TOKEN="tvBG4WMnYN4zl7QB"//数据源
     }
 
     override fun onCreate() {//全局获取context
